@@ -1,0 +1,33 @@
+body {
+	font-family: Arial, serif;
+	font-size: 12px;
+	width: 200px;
+}
+
+#links .link {
+	display: inline;
+}
+
+#faction-info {
+	font-size: 10px;
+	font-style: italic;
+}
+
+.planet {
+	font-weight: bold;
+}
+
+.gas {
+	color: green;
+	font-weight: bold;
+}
+
+.minerals {
+	color: red;
+	font-weight: bold;	
+}
+
+.water {
+	color: blue;
+	font-weight: bold;	
+}

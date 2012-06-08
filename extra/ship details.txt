@@ -1,0 +1,19 @@
+
+
+AIR
+- missile 		Att: B: 4 G: 1 		Def: A: 1
+- fighter  		Att: A: 2 G: 1		Def: B: 4 A: 2
+- bomber		Att: B: 2 A: 1		Def: B: 4 A: 2
+- cruiser		Att: A: 6			Def: B: 2 A: 8
+- destroyer		Att: A: 3 B: 3		Def: B: 4 A: 4
+
+GROUND
+- missile launcher 	Att: (as per missile) 	Def: B: 2 G: 2
+- anti air defence 	Att: A: 4				Def: B: 2 G: 2
+- soldiers			Att: G: 2				Def: B: 6 G: 2
+- tanks				Att: G: 4				Def: B: 2 G: 4
+
+NON COMBAT
+probe				Def: A: 1
+cargo ship			Def: B: 8 A: 12
+colony ship			Def: B: 12 A: 16

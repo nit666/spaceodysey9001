@@ -1,0 +1,61 @@
+<html>
+<head>
+    <link type="text/css" rel="stylesheet" href="screen.css" media="all">
+    <link type="text/css" rel="stylesheet" href="screen.css" media="screen">
+	<link type="text/css" rel="stylesheet" href="handheld.css" media="handheld">
+	<script type="text/javascript">
+	    function openDiv(name) {
+		   var element = document.getElementById(name);
+		   if (element.style.display == "block") {
+		       element.style.display == "none";
+		   } else {
+		       element.style.display = "block";
+		   }
+		}
+	</script>
+	<style type="text/css">
+	   .hide {
+	       display: none;
+	   }
+	</style>
+</head>
+<body>
+
+<div id="main-page">
+
+	<div id="message">
+		<!-- pops up an ajax div with a message in it -->
+	    <a href="messages">Messages(1)</a>
+	</div>
+
+	<div id="faction-list">
+	   <!-- pops up a div with information about the particular faction in it -->
+	   <ul>
+	    <li><a href="faction.html">Faction 1</a></li>
+		<li><a href="faction.html">Faction 2</a></li>
+	   </ul>
+	</div>
+	
+	<div id="planet-list">
+	   <!-- populates the main area with information about the planet, units, resources etc... -->
+	   <ul>
+	    <li><p><a href="javascript:openDiv('archives')">Planet 1</a>
+		    <p>(base)(units)</p>
+			<p>M: 34 W: 4 G: 10</p></li>
+		<li><p><a href="javascript:openDiv('archives')">Planet 2</a></p>
+			<p>(units)</p>
+			<p>G: 5</p></li>
+	   </ul>
+	</div>
+	
+	<div id="links">
+		<div id="link archives"><a href="archives.html">Archives</a></div>
+	    <div id="link options"><a href="options.html">Options</a></div>
+	</div>
+	
+	<div id="archives" class="hide">
+	hey there!
+	</div>
+</div>
+</body>
+</html>

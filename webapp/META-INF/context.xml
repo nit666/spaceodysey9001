@@ -1,0 +1,28 @@
+<Context>
+ <!--   <Resource
+        auth="Container"
+        description="Universe Postgresql DB Connection"
+        name="jdbc/univ"
+        type="javax.sql.DataSource"
+        username="postgres"
+        password="123123"
+        driverClassName="org.postgresql.Driver"
+        url="jdbc:postgresql://localhost:5432/universe"
+        initialSize="3"
+		maxActive="10"
+		maxIdle="5"
+		minIdle="3"
+		maxWait="5000"
+		validationQuery=""
+		poolPreparedStatements="false"
+	/> -->
+
+	
+	  <Resource name="jdbc/univ" auth="Container"
+            type="javax.sql.DataSource" username="wally" password="wally"
+            driverClassName="net.sourceforge.jtds.jdbc.Driver" 
+            url="net.sourceforge.jtds.jdbc.Driver://localhost:1433;DatabaseName=universe;SelectMethod=cursor;"
+            maxActive="8" 
+            />
+
+</Context>

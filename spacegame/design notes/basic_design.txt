@@ -1,0 +1,81 @@
+
+
+The design has changed so that there are now entities and messages. 
+
+Entities:
+
+An entity has an owner and some behaviour. Each entity will have it's behaviour run in turn 
+and this will determine how the entity interacts with the world. 
+
+Messages:
+
+A message is sent between entities, and is used for various means. 
+
+Example: 
+
+A player owns a transport ship that is happily on it's way to a port. The player wants the ship
+to unload it's cargo at the port, so he sends the ship a message that says something like: 
+'unload 10 ton of grain at port X'. The ship gets the message and adds it to it's set of behavioiurs. 
+When it is the ships turn, it will check if it is in port X yet and if it is then it will unload
+the grain. This depends on how the AI for the ship is set up, it might be more important to 
+refuel first or something. 
+
+This is much simpler that the current system because all of the processing is managed within the 
+entity objects and the framework just has to manage messages and the running of entities. 
+
+Some methods: 
+
+// send a message to any entity
+void sendMessage(message) 
+
+	if message.owner is null then throw error
+	if message.destination is null then throw error
+	
+	entity = getEntity(message.destination)
+	owner = getOwner(message.owner)
+	
+	if not hasMessagePermission(owner, entity, message.Type) then throw error
+	
+	entity.addMessage(message)
+
+end sendMessage
+
+// process all entities
+void processEntities()
+
+	while true do
+	
+		startRunTick()
+		
+		entities = getAllActiveEntities()
+		for each entity in entities do
+			entity.run()
+		end for
+		
+		waitForEndOfRunTick();
+		
+	end while
+	
+end processEntities
+
+And that is about it for the framework methods, the rest is just entities and messages.
+
+Now for the updated stuff....
+
+Basically the design is pretty much the same except that now an action is used as before but a set of rules is passed over the action. So you have: 
+
+get actions for all players
+for each action do
+	run test rules
+	if rules fail then
+		store error
+		set action state to error
+	else 
+	    do action
+	end if
+end for
+	
+The rules will be run when the action is created and when it is run as well, but the rule set might be different. A rule is simple and might be 
+something like 'faction a knows about faction b', which would return true if the faction 'a' has knowledge of the faction 'b'
+
+s
