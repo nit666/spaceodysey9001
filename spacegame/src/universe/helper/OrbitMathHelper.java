@@ -3,6 +3,7 @@ package universe.helper;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
+import universe.data.Location;
 import universe.data.Orbitable;
 import universe.data.Planet;
 
@@ -26,76 +27,94 @@ public class OrbitMathHelper {
 	 * @param startTime The time that the universe was started from
 	 * @return The angle in percentage
 	 */
-	public static double getCurrentOrbitAngle(Orbitable p, long startTime) {
+	public static double getCurrentOrbitAngle(double p, long startTime) {
 		Calendar c = Calendar.getInstance();
-		long timeSinceStartTime = c.getTimeInMillis() - startTime;
-		long effectivePeriod = timeSinceStartTime % (long) p.getPeriod();
-		return effectivePeriod / p.getPeriod() * 100.0;
+		return getCurrentOrbitAngle(p, startTime, c.getTimeInMillis());
 	}
 	
-	public static long calculateTimeToIntercept(Planet p1, Planet p2, long currentTime) {
-		// figure out which is the closest to the parent
-		//if (p1.getPeriod())
-		
-		// find out the angular speed for each planet
-		
-		// find out the current angle, and take them away to get the difference
-		// if the closer planet has a larger number (eg: it is after the other planet already), then add 360 to the outer planet.	
-		
-		// t = D/(s1 - s2)
-		
-		// return current time + t
-		
-		return 0;
+	public static double getCurrentOrbitAngle(double p, long startTime, long currentTime) {
+		long timeSinceStartTime = currentTime - startTime;
+		long effectivePeriod = timeSinceStartTime % (long) p;
+		return effectivePeriod / p * 100.0;
 	}
 	
-	/*
-	public static void main(String arg[]) {
-		// a quick test
-		List<Orbitable> planets = new LinkedList<Orbitable>();
-		planets.add(createPlanet("p0", TimeHelper.SecondsToMilliSeconds(30)));
-		planets.add(createPlanet("p1", TimeHelper.SecondsToMilliSeconds(60)));
-		planets.add(createPlanet("p2", TimeHelper.SecondsToMilliSeconds(120)));
-		planets.add(createPlanet("p3", TimeHelper.SecondsToMilliSeconds(240)));
-		planets.add(createPlanet("p4", TimeHelper.SecondsToMilliSeconds(480)));
-		planets.add(createPlanet("p5", TimeHelper.SecondsToMilliSeconds(920)));
-
-		System.out.println("planets created");
-		for (Orbitable p : planets) {
-			System.out.println(p.getName() + ": " + p.getPeriod() + ", " + p.getRadiusFromParent());
+	/**
+	 * helper method that does the same thing as calculateFakeTravelDistance but only needs period values
+	 * 
+	 * @param sourcePeriod
+	 * @param destPeriod
+	 * @return
+	 */
+	public static double calculateFakeTravelDistance(double sourcePeriod, double destPeriod) {
+		return calculateFakeTravelDistance(
+				getCurrentOrbitAngle(sourcePeriod,TimeHelper.getGameStartTime()), 
+				getCurrentOrbitAngle(destPeriod, TimeHelper.getGameStartTime()),
+				getOrbitDistanceFromParent(sourcePeriod),
+				getOrbitDistanceFromParent(destPeriod));
+	}
+	
+	/**
+	 * This function will tell a workable travel distance between two orbiting objects (like a moon and wormhole)
+	 * It works out an average arc distance between the two objects. 
+	 * 
+	 * @param sourceAngle this is in degrees
+	 * @param destAngle this is in degrees
+	 * @param sourceDist the distance from the planet (orbit radius)
+	 * @param destDistance the distance from the planet (orbit radius)
+	 * @return the travel distance to the destination
+	 */
+	public static double calculateFakeTravelDistance(double sourceAngle, double destAngle, double sourceDist, double destDist) {
+		
+		// the travel distance is the angular distance between two orbiting objects and the difference in distance from the planet
+		double distanceDiff = sourceDist;
+		if (sourceDist > destDist) {
+			distanceDiff = sourceDist - destDist;
+		} else if (destDist > sourceDist) {
+			distanceDiff = destDist - sourceDist;
 		}
 		
-		long startTime = Calendar.getInstance().getTimeInMillis();
-		
-		int secondCount = 0;
-		int minuteCount = 0;
-		while (true) {
-			if (secondCount >= 60) {
-				secondCount = 0;
-				minuteCount++;
-			}
-			secondCount++;
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			System.out.println("Current location of planets at " + minuteCount + ":" + secondCount);
-			
-			for (Planet p : planets) {
-				double angle = getCurrentOrbitAngle(p, startTime);
-				System.out.println(p.getName() + ": " + MetricHelper.percentToDegrees(angle));				
-			}
+		double angleDiff = Math.abs(sourceAngle - destAngle);
+		if (angleDiff > 180) {
+			angleDiff = 360 - angleDiff;
 		}
+		
+		// figure out how far the ship needs to travel in an arc
+		// formula for this is: length = diameter X PI X arc/360
+		// use the largest diameter - the distance difference
+		return distanceDiff * 2 * Math.PI * angleDiff/360;
 	}
 	
-	private static Planet createPlanet(String name, double period) {
-		Planet p = new Planet();
-		p.setName(name);
-		p.setPeriod(period);
-		p.setRadiusFromParent(getOrbitDistanceFromParent(p.getPeriod()));
-		return p;
+	/**
+	 * Calculates about how long it will take to travel a certain distance in time and then returns
+	 * the arrival time. 
+	 * 
+	 * @param startTime the time that the ship departs the current location
+	 * @param distance how long to travel
+	 * @param speed the speed that the ship will be travelling at
+	 * @return the arrival time
+	 */
+	public static long calculateArrivalTime(long startTime, double distance, double speed) {
+		double travelTime = distance / speed;
+		return startTime + (long) travelTime;
 	}
-	*/
+	
+	/**
+	 * Determines if two objects are in the same system or not.
+	 */
+	public static boolean inSameSystem(Location l1, Location l2) {
+		String system1 = "";
+		String system2 = "";
+		if (l1 instanceof Planet) {
+			system1 = l1.getId();
+		} else {
+			system1 = ((Orbitable) l1).getParent().getId();
+		}
+		if (l2 instanceof Planet) {
+			system2 = l2.getId();
+		} else {
+			system2 = ((Orbitable) l2).getParent().getId();
+		}
+	
+		return system1.equals(system2);
+	}
 }

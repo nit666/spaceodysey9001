@@ -1,5 +1,7 @@
 package universe.helper;
 
+import java.util.Calendar;
+
 public final class TimeHelper {
 
 	private TimeHelper() {
@@ -7,6 +9,14 @@ public final class TimeHelper {
 	}
 	
 	public static final double ONE_SECOND = 1000.0;
+	
+	public static long getGameStartTime() {
+		return 100000;
+	}
+	
+	public static long getCurrentTime() {
+		return Calendar.getInstance().getTimeInMillis();
+	}
 	
 	public static long SecondsToMilliSeconds(long seconds) {
 		return seconds * 1000;
@@ -17,7 +27,7 @@ public final class TimeHelper {
 	}
 	
 	public static long HoursToMilliSeconds(float hours) {
-		long seconds = (long)hours * 60 * 60; // get seconds
+		long seconds = (long)(hours * 60 * 60); // get seconds
 		return SecondsToMilliSeconds(seconds);
 	}
 	
