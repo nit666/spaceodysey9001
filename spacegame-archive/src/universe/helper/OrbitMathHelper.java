@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import universe.data.Orbitable;
 import universe.data.Planet;
 
 
@@ -14,6 +13,12 @@ public class OrbitMathHelper {
 	public static final double GRAVITATIONAL_CONSTANT = Math.pow(6.67259, -11);
 	
 	static BigDecimal earthGM = new BigDecimal(398600500000000.0);
+	
+	/* no longer used 
+	public static double calculateOrbitalPeriod(BigDecimal GM, BigDecimal semiMajorAxis) {
+		BigDecimal period = new BigDecimal(4.0 * Math.PI * Math.PI).multiply(semiMajorAxis.pow(3));
+		return Math.sqrt(period.divide(GM).doubleValue());
+	} */
 	
 	/**
 	 * Calculates the distance from the parent body, based off the period of rotation.
@@ -29,7 +34,7 @@ public class OrbitMathHelper {
 	 * @param startTime The time that the universe was started from
 	 * @return The angle in percentage
 	 */
-	public static double getCurrentOrbitAngle(Orbitable p, long startTime) {
+	public static double getCurrentOrbitAngle(Planet p, long startTime) {
 		Calendar c = Calendar.getInstance();
 		long timeSinceStartTime = c.getTimeInMillis() - startTime;
 		long effectivePeriod = timeSinceStartTime % (long) p.getPeriod();
@@ -52,10 +57,10 @@ public class OrbitMathHelper {
 		return 0;
 	}
 	
-	/*
+	
 	public static void main(String arg[]) {
 		// a quick test
-		List<Orbitable> planets = new LinkedList<Orbitable>();
+		List<Planet> planets = new LinkedList<Planet>();
 		planets.add(createPlanet("p0", TimeHelper.SecondsToMilliSeconds(30)));
 		planets.add(createPlanet("p1", TimeHelper.SecondsToMilliSeconds(60)));
 		planets.add(createPlanet("p2", TimeHelper.SecondsToMilliSeconds(120)));
@@ -64,7 +69,7 @@ public class OrbitMathHelper {
 		planets.add(createPlanet("p5", TimeHelper.SecondsToMilliSeconds(920)));
 
 		System.out.println("planets created");
-		for (Orbitable p : planets) {
+		for (Planet p : planets) {
 			System.out.println(p.getName() + ": " + p.getPeriod() + ", " + p.getRadiusFromParent());
 		}
 		
@@ -100,5 +105,4 @@ public class OrbitMathHelper {
 		p.setRadiusFromParent(getOrbitDistanceFromParent(p.getPeriod()));
 		return p;
 	}
-	*/
 }

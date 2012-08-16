@@ -16,9 +16,4 @@ public final class TimeHelper {
 		return millis / 1000;
 	}
 	
-	public static long HoursToMilliSeconds(float hours) {
-		long seconds = (long)hours * 60 * 60; // get seconds
-		return SecondsToMilliSeconds(seconds);
-	}
-	
 }

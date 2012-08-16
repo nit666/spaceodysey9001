@@ -1,146 +1,50 @@
 package universe.data;
 
-import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-public class Planet implements Ownable, Serializable {
+public class Planet implements Location {
 
-	long planetId;
-	Faction faction;
-	double period;
-	double radiusFromParent;
-	int xloc;
-	int yloc;
-	Location parent;
-	String type;
-	int water;
-	int gas;
-	int minerals;
+	String id;
 	String name;
 	
+	List<Moon> moons = new LinkedList<Moon>();
+	List<Wormhole> wormholes = new LinkedList<Wormhole>();
 	
+	public Planet(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 	
-	public double getPeriod() {
-		return period;
+	public Planet addMoon(Moon moon, Map<String, Location> locationMap) {
+		moon.setParent(this);
+		moons.add(moon);
+		locationMap.put(moon.getId(), moon);
+		return this;
+	}
+	
+	// only add wormholes that start from this planet
+	public Planet addWormhole(Wormhole wh, Map<String, Location> locationMap) {
+		wh.setStartPlanet(this);
+		wormholes.add(wh);
+		locationMap.put(wh.getId(), wh);
+		return this;
 	}
 
-	public void setPeriod(double period) {
-		this.period = period;
-	}
-
-	public double getRadiusFromParent() {
-		return radiusFromParent;
-	}
-
-	public void setRadiusFromParent(double radiusFromParent) {
-		this.radiusFromParent = radiusFromParent;
+	public String getId() {
+		return id;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public List<Moon> getMoons() {
+		return moons;
 	}
 
-	public Faction getOwner() {
-		return faction;
+	public List<Wormhole> getWormholes() {
+		return wormholes;
 	}
-
-	public void addMessage(Message message) {
-		
-	}
-
-	public long getPlanetId() {
-		return planetId;
-	}
-
-	public void setPlanetId(long planetId) {
-		this.planetId = planetId;
-	}
-
-	public Faction getFaction() {
-		return faction;
-	}
-
-	public void setFaction(Faction faction) {
-		this.faction = faction;
-	}
-
-	public void setXloc(int xloc) {
-		this.xloc = xloc;
-	}
-
-	public void setYloc(int yloc) {
-		this.yloc = yloc;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public int getWater() {
-		return water;
-	}
-
-	public void setWater(int water) {
-		this.water = water;
-	}
-
-	public int getGas() {
-		return gas;
-	}
-
-	public void setGas(int gas) {
-		this.gas = gas;
-	}
-
-	public int getMinerals() {
-		return minerals;
-	}
-
-	public void setMinerals(int minerals) {
-		this.minerals = minerals;
-	}
-
-	public void setParent(Location parent) {
-		this.parent = parent;
-	}
-
-	public Location getLocation() {
-		return this;
-	}
-
-	public void run() {
-		
-	}
-
-	public Object getKey() {
-		return planetId;
-	}
-
-	public long getLocationId() {
-		return planetId;
-	}
-
-	public Location getParent() {
-		return null;
-	}
-
-	public double getX() {
-		return xloc;
-	}
-
-	public double getY() {
-		return yloc;
-	}
-
-	public double getZ() {
-		return 0;
-	}
-
 }

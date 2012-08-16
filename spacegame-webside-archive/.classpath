@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spacegame"/>
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib/velocity-1.6.2.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/spacegame-archive"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
