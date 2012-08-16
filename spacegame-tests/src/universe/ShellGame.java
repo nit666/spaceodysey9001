@@ -169,10 +169,27 @@ public class ShellGame {
 			}
 		}
 		if (ship.getCurrentPath() != null) {
-			System.out.println("Ship is on the way to " + ship.getCurrentLocation().getId());
+			System.out.println(getCurrentDestinationString(ship.getCurrentLocation()));
 			printPath(ship.getCurrentPath());
 		} else {
 			System.out.println("Ship is located at " + ship.getCurrentLocation().getId());
+		}
+	}
+	
+	private String getCurrentDestinationString(Location l) {
+		if (l instanceof Planet) {
+			return "Your ship is currently in free space, destined for the Planet " + l.getId(); 
+		} else if (l instanceof Wormhole.WormholeDestinationOrbit) {
+			Wormhole.WormholeDestinationOrbit dest = (Wormhole.WormholeDestinationOrbit) l;
+			return "Your ship is in hyperspace, heading for the " + dest.getParent().getName() + " system";
+		} else if (l instanceof Wormhole) {
+			Wormhole dest = (Wormhole) l;
+			return "Your ship is in the " + dest.getParent().getName() + " system heading for the " + dest.getEndPlanet().getName() + " system via hyperspace";
+		} else if (l instanceof Moon) {
+			Moon m = (Moon) l;
+			return "Your ship is in the " + m.getParent().getName() + " system heading for the moon " + m.getName();
+		} else {
+			return "I have no idea where you ship is!";
 		}
 	}
 	

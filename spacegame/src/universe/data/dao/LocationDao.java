@@ -256,7 +256,7 @@ public class LocationDao {
 	 */
 	public PathElement calculatePathTime(Wormhole wh, long pathTime) {
 		long arrivalTime = pathTime + wh.getTravelTime();
-		return new PathElement(wh, arrivalTime);
+		return new PathElement(wh.getDestination(), arrivalTime);
 	}
 	
 	/**

@@ -59,21 +59,27 @@ public class Wormhole implements Orbitable {
 	}
 	
 	public Orbitable getDestination() {
-		return new DestinationOrbit();
+		return new WormholeDestinationOrbit(this);
 	}
 	
-	class DestinationOrbit implements Orbitable {
+	public static class WormholeDestinationOrbit implements Orbitable {
 
+		Wormhole wh;
+		
+		public WormholeDestinationOrbit(Wormhole wh) {
+			this.wh = wh;
+		}
+		
 		public Planet getParent() {
-			return getEndPlanet();
+			return wh.getEndPlanet();
 		}
 	
 		public double getPeriod() {
-			return getEndPeriod();
+			return wh.getEndPeriod();
 		}
 	
 		public String getId() {
-			return getId() + "end";
+			return wh.getId();
 		}
 	}
 }
