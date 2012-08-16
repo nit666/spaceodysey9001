@@ -2,12 +2,9 @@ package universe.helper;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
 
 import universe.data.Orbitable;
 import universe.data.Planet;
-
 
 public class OrbitMathHelper {
 

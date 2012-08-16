@@ -2,6 +2,7 @@ package universe.data.unit.defaults;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import universe.data.Cargo;
 import universe.data.cargo.Mineral;
@@ -18,6 +19,14 @@ public class DefaultCargoHold implements CargoHold {
 	public DefaultCargoHold(double space) {
 		this.maxSpace = space;
 		this.currentSpace = maxSpace;
+	}
+	
+	/**
+	 * Get a list of all the cargo that is currently in the cargo hold
+	 * @return
+	 */
+	public Set<Cargo> getAvailableCargo() {
+		return cargo.keySet();
 	}
 	
 	public void addCargoOfType(Cargo type, double amount) {

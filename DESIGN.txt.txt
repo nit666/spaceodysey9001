@@ -1,0 +1,153 @@
+The World
+=========
+The world is made up of a series of planets which are connected by wormholes. Planets can also have moons.
+Each planet is a preset planet with a population, culture and services, and the player interacts with the services and available world. 
+
+Wormholes are available to travel between planets, and when moving in the wormhole the ship doesn't do the movement, but rather private companies that own the wormholes charge for a 'boosting' that allows the ship to travel between one point and another quickly. This service costs, and the amount depends on the distance and location of the wormhole. 
+
+Not all planets are politically or environmentally stable, so when going to a planet, a player needs to consider the environment that they are going to, and equip their ship accordingly. 
+
+The purpose of the game is to achieve a high rank compared to other players by trading, doing missions and earning achievements. Rank can be frozen if you die but not lost. 
+
+Systems TBD
+===========
+
+Pathing/Movement system
+-----------------------
+To move between planets and moons, a path needs to be created from one location to another, and from this path, the travel time is calculated and a set of path points.
+
+eg: to travel between planet A and planet B a wormhole needs to be crossed. So the path would look like the following.
+
+Planet A -> wormhole (1.2 hours) 
+wormhole travel (4 hours)
+wormhole -> Planet B (2.3 hours)
+
+total travel time = 7.5 hours
+
+- The first challenge is to figure out the time from the planet to the wormhole. Wormholes orbit planets so they have a distance away and this will be used to determine the time taken. 
+- Wormhole time is set. 
+- If the current location is a moon then things are a bit different. You can move between a moon and planet, planet and moon or moon to moon, moon to wormhole. In the case of planet to moon or moon to planet, the orbital distance is used to determine the time (the ships speed determines time in this case). 
+- If the travel type is moon -> wormhole, moon -> moon or wormhole -> moon then the vertical distance is taken and added to the current angular distance to determine the speed. It isn't completely accurate, but it will do until complex maths are worked out :) 
+
+Another example path:
+
+Planet A -> Planet C via Planet B
+
+Planet A -> wormhole (1.2 hours)
+wormhole travel (4 hours)
+wormhole -> wormhole (in planet B system, time depends on current orbit, 0.3 hours lets say in this case)
+wormhole travel (2 hours)
+wormhole -> planet C (0.8 hours)
+
+total travel time = 8.3 hours
+
+
+
+
+Messaging system
+----------------
+Players need to be able to recieve messages. So a system needs to be in place that can record messages sent to a player and then when the player logs in to check their status, they will get these messages in order.
+
+There are various message types, so a set of parameters needs to be available to cater for this. Message types might include:
+	- system messages (global messages)
+	- log messages (eg: the ship has arrived at such and such)
+	- NPC messages (eg: when a non player tries to communicate)
+	- trade messages (when something sells on the AH's)
+	- player messages (another player tries to interact with the current player)
+
+Messages may require an interactive decision, for example, an NPC can send a distress message to all ships in the area, and any players that pick it up can go and deal with the distress by choosing to do so from the message. 
+
+Messages can be filtered so certain messages aren't shown. 
+
+The base message would have the following attributes:
+Message:
+	- sender // a player or system or whatever
+	- reciever // who will read the message
+	- message body // this varies according to the message. 
+	- read // if the message has been read yet or not
+
+Methods needed are as follows: 
+
+void sendMessage(Message);
+getMessagesForPlayer(Player)
+getMessagesForPlayer(Player, Filter)
+markMessageAsRead(Message);
+
+
+
+
+Ship component System
+---------------------
+Player ships can have various components added to them to enhance the performance, defence and survivability of the ship. This helps the player get through the game quicker and add more points, and also helps them keep alive. For this system, components need to be able to be added to a ship in such a way that components add a benefit but at a cost. 
+
+Components can breakdown, and they will have to be serviced at a port occasionally to make sure this doesn't happen. They can also be potentially damaged by random events.
+
+Component status can be checked at any time by the player to see if they have been damaged or whatever, but failing to maintain the systems will cause random failures. 
+
+Components are based around a balance of weight, power and function. So a component has a power consumption, a weight and a function. 
+
+example component types are:
+	- life support systems
+	- computer systems
+	- weapons systems
+	- cargo holds
+	- passenger cabins
+	- scanning and other scientific equipment
+	- sheilds (both passive and energy sheilds)
+	- faster motors
+
+
+
+
+Cargo system
+------------
+If a ship has a cargo hold, or passenger hold then that cargo needs to be managed (in code and in the database later). See spacegame-archive: universe.data.unit.defaults.DefaultCargoHold for an implmentation of code. The cargo hold is a ship component. 
+
+
+
+
+Trade system
+---------
+Each planet has its own market and what is for sale and the prices are based on a) what the planet produces and b) what players have sold. For example, if a planet is a water planet, then they will have heaps of water and it will sell quite cheap, so player can buy water at this planet and potentially transport it to a planet that is starved of water to make money. As there are costs associated with transporting cargo around the place, then the player needs to decide whether they will make money doing so. 
+
+Each planet (and moon) has a demand for resources, and how well this demand is being met determines the current price. So if lots of players are devivering water to a water starved planet then the buy price will drop, but if nobody has for a while, then it will go up. 
+
+What this means is that planets and moons need to have their resources managed in the following way: 
+
+- There are different mineral types
+- Each planet/moon has a consumption rate of resources depending on population and what they make (TBD)
+- Each planet/moon has a store or each resource type and this goes up and down when someone sells or buys from that planet.
+- The store itself is not visible to the player but the resulting price is. 
+
+
+
+
+Random Event System
+-------------------
+Random events can happen during travel, depending on where the player travels to. Different planetary systems will have different types of events that can happen and different chances for those events. 
+
+There are events that happen to the player in a particular system: for example: 
+- Planet A is a rough planet, and there is a chance that a player might get attacked. If a player is attacked they have a choice on what to do a) give in to demands (usually give over cargo), b) run, c) fight and potentially become disabled or die!. 
+- When in wormholes there is a chance that you might run into a space whale.
+- Some system have asterioids
+
+There are events that happen to a planetary body, for example:
+- earthquakes
+- political upheaval
+- plague
+- meteor stike
+- etc..
+
+There are also random events that can happen any time: 
+- an NPC ship is in distress and needs help from the player
+- a ship component breaks down in some way. 
+
+The random event system needs to periodically check for any of these events happening based on where the player is. Also it needs to deal with world wide random events. 
+
+
+
+
+Achievment/ranking system
+-------------------------
+
+This is the system of scoring, and statistics are kept for a particular player ship (not the player themselves). This is still to be flushed out. 
