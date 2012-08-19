@@ -1,8 +1,14 @@
 package universe.data;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class PlayerShip {
+import universe.datatypes.Location;
+import universe.datatypes.Orbitable;
+import universe.helper.TimeHelper;
+
+public class PlayerShip extends Orbitable {
 	Player player;
 	Location currentLocation;
 	
@@ -10,7 +16,7 @@ public class PlayerShip {
 	List<PathElement> currentPath = null;
 	double percentOfPathCompleted = 0;
 	
-	double speed = 3.799;
+	double speed = 0.77;
 	
 	public Player getPlayer() {
 		return player;
@@ -43,4 +49,22 @@ public class PlayerShip {
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
+	public Location getParent() {
+		return getCurrentLocation();
+	}
+	public double getPeriod() {
+		return getCurrentLocation() instanceof Orbitable? ((Orbitable) getCurrentLocation()).getPeriod() : 0;
+	}
+	public String getId() {
+		return getPlayer().toString();
+	}
+	@Override
+	public List<PathElement> createPathTo(Location startLocation,Location newLocation, long startTime, double shipSpeed, Set<Location> hits) {
+		return getCurrentLocation().createPathTo(this.getCurrentLocation(), newLocation, startTime, shipSpeed, hits);
+	}
+	
+	public List<PathElement> pathToNow(Location newLocation) {
+		return createPathTo(this, newLocation, TimeHelper.getCurrentTime(), getSpeed(), new HashSet<Location>());
+	}
+	
 }

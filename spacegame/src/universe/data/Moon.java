@@ -1,6 +1,8 @@
 package universe.data;
 
-public class Moon implements Orbitable {
+import universe.datatypes.Orbitable;
+
+public class Moon extends Orbitable {
 
 	String name;
 	String id;

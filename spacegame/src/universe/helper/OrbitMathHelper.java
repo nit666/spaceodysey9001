@@ -3,9 +3,6 @@ package universe.helper;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-import universe.data.Location;
-import universe.data.Orbitable;
-import universe.data.Planet;
 
 public class OrbitMathHelper {
 
@@ -96,25 +93,5 @@ public class OrbitMathHelper {
 	public static long calculateArrivalTime(long startTime, double distance, double speed) {
 		double travelTime = distance / speed;
 		return startTime + (long) travelTime;
-	}
-	
-	/**
-	 * Determines if two objects are in the same system or not.
-	 */
-	public static boolean inSameSystem(Location l1, Location l2) {
-		String system1 = "";
-		String system2 = "";
-		if (l1 instanceof Planet) {
-			system1 = l1.getId();
-		} else {
-			system1 = ((Orbitable) l1).getParent().getId();
-		}
-		if (l2 instanceof Planet) {
-			system2 = l2.getId();
-		} else {
-			system2 = ((Orbitable) l2).getParent().getId();
-		}
-	
-		return system1.equals(system2);
 	}
 }

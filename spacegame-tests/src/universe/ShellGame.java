@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-import universe.data.Location;
 import universe.data.Moon;
 import universe.data.PathElement;
 import universe.data.Planet;
@@ -13,6 +12,7 @@ import universe.data.Player;
 import universe.data.PlayerShip;
 import universe.data.Wormhole;
 import universe.data.dao.LocationDao;
+import universe.datatypes.Location;
 import universe.helper.TimeHelper;
 
 public class ShellGame {

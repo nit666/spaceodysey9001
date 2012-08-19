@@ -1,5 +1,7 @@
 package universe.data;
 
+import universe.datatypes.Location;
+
 public class PathElement {
 	Location destination;
 	long arrivalTime;
