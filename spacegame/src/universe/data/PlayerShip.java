@@ -1,6 +1,7 @@
 package universe.data;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -11,6 +12,8 @@ import universe.helper.TimeHelper;
 public class PlayerShip extends Orbitable {
 	Player player;
 	Location currentLocation;
+	
+	List<ShipComponent> components = new LinkedList<ShipComponent>();
 	
 	// used for travel
 	List<PathElement> currentPath = null;
@@ -57,6 +60,13 @@ public class PlayerShip extends Orbitable {
 	}
 	public String getId() {
 		return getPlayer().toString();
+	}
+	
+	public List<ShipComponent> getComponents() {
+		return components;
+	}
+	public void setComponents(List<ShipComponent> components) {
+		this.components = components;
 	}
 	@Override
 	public List<PathElement> createPathTo(Location startLocation,Location newLocation, long startTime, double shipSpeed, Set<Location> hits) {

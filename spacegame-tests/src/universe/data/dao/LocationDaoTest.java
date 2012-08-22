@@ -16,7 +16,7 @@ import universe.helper.PathHelper;
 public class LocationDaoTest extends TestCase {
 
 	public void testLocationMap() {
-		LocationDao dao = new LocationDao();
+		LocationDao dao = new TestLocationDao();
 		
 		Location l = dao.getLocationById("P1");
 		
@@ -42,7 +42,7 @@ public class LocationDaoTest extends TestCase {
 	}
 	
 	public void testPathCreation() {
-		LocationDao dao = new LocationDao();
+		LocationDao dao = new TestLocationDao();
 		
 		Location p1 = dao.getLocationById("P1");
 		PlayerShip s = new PlayerShip();
