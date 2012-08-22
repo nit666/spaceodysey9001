@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename compilation unit &apos;universe.web.action.MoveUnitWebAction.java&apos; to &apos;UnitActionWebAction.java&apos;&#x0D;&#x0A;- Original project: &apos;spacegame-webside&apos;&#x0D;&#x0A;- Original element: &apos;universe.web.action.MoveUnitWebAction.java&apos;&#x0D;&#x0A;- Renamed element: &apos;universe.web.action.UnitActionWebAction.java&apos;" description="Rename compilation unit &apos;MoveUnitWebAction.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;universe.web.action{MoveUnitWebAction.java" name="UnitActionWebAction.java" references="false" stamp="1255951411074" version="1.0"/>
-</session>

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<session version="1.0">
-<refactoring comment="Rename type 'universe.rule.faction.FactionKnowsAboutUnitTypeRule' to 'FactionKnowsAboutRule'&#13;&#10;- Original element: 'universe.rule.faction.FactionKnowsAboutUnitTypeRule'&#13;&#10;- Renamed element: 'universe.rule.faction.FactionKnowsAboutRule'&#13;&#10;- Update references to refactored element&#13;&#10;- Update textual occurrences in comments and strings" description="Rename type 'FactionKnowsAboutUnitTypeRule'" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;universe.rule.faction{FactionKnowsAboutUnitTypeRule.java[FactionKnowsAboutUnitTypeRule" matchStrategy="1" name="FactionKnowsAboutRule" qualified="false" references="true" similarDeclarations="false" stamp="1216121714085" textual="false" version="1.0"/>
-</session>

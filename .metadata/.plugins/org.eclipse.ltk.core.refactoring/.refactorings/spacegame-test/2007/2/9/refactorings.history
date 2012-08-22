@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<session version="1.0">
-<refactoring comment="Convert member type 'universe.helper.LocationHelperTest.TestLocation' in 'universe.helper.LocationHelperTest' to top level type&#13;&#10;- Original element: 'universe.helper.LocationHelperTest.TestLocation'" description="Convert member type 'TestLocation' to top level" field="false" final="true" flags="786438" id="org.eclipse.jdt.ui.move.inner" input="/src&lt;universe.helper{LocationHelperTest.java[LocationHelperTest[TestLocation" mandatory="false" possible="true" stamp="1172385877968" version="1.0"/>
-</session>
